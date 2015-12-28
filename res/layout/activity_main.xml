@@ -5,16 +5,23 @@
     android:background="@drawable/launcher_bg" >
 
     <TextView
+        android:id="@+id/tv_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:shadowColor="#F00"
-        android:shadowDx="4"
-        android:shadowDy="4"
+        android:shadowDx="1"
+        android:shadowDy="1"
         android:shadowRadius="1"
         android:text="版本号:1.0"
         android:textColor="#000"
         android:textSize="16sp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_version"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
