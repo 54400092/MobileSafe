@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/launcher_bg" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:shadowColor="#F00"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="1"
+        android:text="版本号:1.0"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+</RelativeLayout>
