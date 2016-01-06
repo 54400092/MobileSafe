@@ -154,9 +154,9 @@ public class SplashActivity extends Activity {
 					// 设置请求方法
 					conn.setRequestMethod("GET");
 					// 设置连接超时,没有连接上
-					conn.setConnectTimeout(5000);
+					conn.setConnectTimeout(2000);
 					// 设置响应超时,连接上了,但服务器迟迟不给响应
-					conn.setReadTimeout(5000);
+					conn.setReadTimeout(2000);
 					// 连接服务器
 					conn.connect();
 					// 获取响应码
