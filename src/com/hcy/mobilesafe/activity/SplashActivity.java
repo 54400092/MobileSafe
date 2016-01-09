@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -26,6 +27,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +56,7 @@ public class SplashActivity extends Activity {
 	private String mDownloadUrl; // 下载地址
 
 	private Handler mhandler = new Handler() {
+
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case CODE_UPDATE_DIALOG:
@@ -81,6 +85,8 @@ public class SplashActivity extends Activity {
 			}
 		};
 	};
+	private SharedPreferences mPref;
+	private RelativeLayout rlRoot; // 跟布局
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +96,23 @@ public class SplashActivity extends Activity {
 		tvVersion.setText("版本名:" + getVersion());
 		tvProgress = (TextView) findViewById(R.id.tv_progress); // 默认隐藏
 
-		checkVersion();
+		rlRoot = (RelativeLayout) findViewById(R.id.rl_root);
+
+		mPref = getSharedPreferences("config", MODE_PRIVATE);
+
+		// 判断是否需要自动更新
+		boolean autoUpdate = mPref.getBoolean("auto_update", true);
+		if (autoUpdate) {
+			checkVersion();
+		} else {
+			mhandler.sendEmptyMessageDelayed(CODE_ENTERHOME, 2000);// 延时2s后发送消息
+		}
+
+		// 渐变的动画效果
+		AlphaAnimation anim = new AlphaAnimation(0.3f, 1f);
+		anim.setDuration(2000);
+		rlRoot.startAnimation(anim);
+
 	}
 
 	/**
@@ -277,7 +299,7 @@ public class SplashActivity extends Activity {
 			HttpUtils utils = new HttpUtils();
 			utils.download(mDownloadUrl, target, new RequestCallBack<File>() {
 
-				// 下载文件的进度
+				// 下载文件的进度,该方法在主线程运行
 				@Override
 				public void onLoading(long total, long current, boolean isUploading) {
 					super.onLoading(total, current, isUploading);
@@ -286,7 +308,7 @@ public class SplashActivity extends Activity {
 					tvProgress.setText("下载进度:" + current * 100 / total + "%");
 				}
 
-				// 下载成功
+				// 下载成功,该方法在主线程运行
 				@Override
 				public void onSuccess(ResponseInfo<File> arg0) {
 					Log.d("测试1", "downLoad:" + "下载成功");
@@ -298,7 +320,7 @@ public class SplashActivity extends Activity {
 					startActivityForResult(intent, 0); // 如果用户取消安装的话会返回结果,回调onActivityResult
 				}
 
-				// 下载失败
+				// 下载失败,该方法在主线程运行
 				@Override
 				public void onFailure(HttpException arg0, String arg1) {
 					Toast.makeText(SplashActivity.this, "下载失败!", Toast.LENGTH_SHORT).show();

@@ -25,10 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.hcy.mobilesafe.activity.HomeActivity"
-            android:label="@string/app_name" >
-        </activity>
+        <activity android:name="com.hcy.mobilesafe.activity.HomeActivity" />
+        <activity android:name="com.hcy.mobilesafe.activity.SettingActivity" />
     </application>
 
 </manifest>
