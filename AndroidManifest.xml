@@ -27,6 +27,8 @@
         </activity>
         <activity android:name="com.hcy.mobilesafe.activity.HomeActivity" />
         <activity android:name="com.hcy.mobilesafe.activity.SettingActivity" />
+        <activity android:name="com.hcy.mobilesafe.activity.LostFindActivity" />
+        <activity android:name="com.hcy.mobilesafe.activity.Setup1Activity" />
     </application>
 
 </manifest>
